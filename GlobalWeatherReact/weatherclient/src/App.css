@@ -1,0 +1,43 @@
+.panel {
+    padding-left: 0px; 
+    padding-top: 10px
+}
+
+.field {
+  padding-left: 10px; 
+  padding-right: 10px
+}
+
+.city {
+    display: flex;
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(25,112,245,0.6399510487788865) 0%, rgba(0,212,255,1) 100%);
+    flex-direction: column;
+    height: 40vh;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 20px 20px 20px;
+    margin: 0px 0px 50px 0px;
+    border: 1px solid;
+    border-radius: 5px;
+    box-shadow: 2px 2px #888888;
+    font-family: 'Merriweather', serif;
+ }
+  
+  .city h1 {
+    line-height: 1.2
+  }
+  
+  .city span {
+    padding-left: 20px
+  }
+  
+  .city .row {
+    padding-top: 20px
+  }
+  
+  .weatherError {
+    color: #f16051;
+    font-size: 20px;
+    letter-spacing: 1px;
+    font-weight: 200;
+}

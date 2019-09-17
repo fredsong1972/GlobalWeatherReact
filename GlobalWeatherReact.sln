@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29306.81
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GlobalWeatherReact", "GlobalWeatherReact\GlobalWeatherReact.csproj", "{B3CEB479-E3FD-402B-BC37-39CFE685B512}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weather.Persistence", "Weather.Persistence\Weather.Persistence.csproj", "{BE2F8B7B-6BB8-41D5-8C9D-03FD4A16957C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B3CEB479-E3FD-402B-BC37-39CFE685B512}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3CEB479-E3FD-402B-BC37-39CFE685B512}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3CEB479-E3FD-402B-BC37-39CFE685B512}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3CEB479-E3FD-402B-BC37-39CFE685B512}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE2F8B7B-6BB8-41D5-8C9D-03FD4A16957C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE2F8B7B-6BB8-41D5-8C9D-03FD4A16957C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE2F8B7B-6BB8-41D5-8C9D-03FD4A16957C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE2F8B7B-6BB8-41D5-8C9D-03FD4A16957C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E3DAD449-2F63-43EC-BB0E-206EBA4C5B71}
+	EndGlobalSection
+EndGlobal
