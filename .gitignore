@@ -37,6 +37,9 @@ build/Release
 node_modules/
 jspm_packages/
 
+# react build folder
+build/
+
 # Typescript v1 declaration files
 typings/
 
