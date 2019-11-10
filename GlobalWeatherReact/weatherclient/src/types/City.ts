@@ -1,8 +1,8 @@
-import { Country } from './Country';
+﻿import { Country } from './Country';
 
 export interface City {
-  Key: string;
-  EnglishName: string;
-  Type: string;
-  Country: Country;
+    Key: string;
+    EnglishName: string;
+    Type: string;
+    Country: Country;
 };

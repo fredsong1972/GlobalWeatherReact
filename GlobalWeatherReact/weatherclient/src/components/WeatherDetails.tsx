@@ -1,11 +1,11 @@
-import React from 'react';
+﻿import React from 'react';
 import { Weather } from '../types/Weather'
 
 interface IProp {
     weather: Weather,
 };
 
-class WeatherGroup extends React.Component<IProp> {
+class WeatherDetails extends React.Component<IProp> {
     render() {
         const weather = this.props.weather;
         return (
@@ -56,4 +56,4 @@ class WeatherGroup extends React.Component<IProp> {
     }
 };
 
-export default WeatherGroup;
+export default WeatherDetails;

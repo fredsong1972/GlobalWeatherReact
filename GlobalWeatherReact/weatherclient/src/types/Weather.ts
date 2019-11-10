@@ -1,5 +1,6 @@
-import { CurrentCondition } from './CurrentCondtion';
+﻿import { CurrentCondition } from './CurrentCondition';
 import { City } from './City'
+import { Constants } from '../Constants';
 
 export class Weather {
     public location?: string;
@@ -9,13 +10,16 @@ export class Weather {
     public temperatureUnit?: string;
     public isDaytime?: boolean;
     public error?: string;
-  
+
     public constructor(currentConditions: CurrentCondition, city: City) {
         this.location = city.EnglishName!;
         this.weatherText = currentConditions.WeatherText;
         this.isDaytime = currentConditions.IsDayTime;
-        if (currentConditions.WeatherIcon){
-            this.weatherIcon = require(`../assets/images/${currentConditions.WeatherIcon}.png`);
+        if (currentConditions.WeatherIcon) {
+            let icon = currentConditions.WeatherIcon.toString();
+            if (icon.length === 1)
+                icon = "0" + icon;
+            this.weatherIcon = `${Constants.weatherIconUrl}${icon}-s.png`;
         }
         this.temperatureValue = currentConditions.Temperature.Metric.Value;
         this.temperatureUnit = currentConditions.Temperature.Metric.Unit;

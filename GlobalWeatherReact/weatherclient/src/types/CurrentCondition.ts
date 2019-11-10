@@ -1,4 +1,4 @@
-export interface CurrentCondition {
+﻿export interface CurrentCondition {
     LocalObservationDateTime: string;
     WeatherText: string;
     WeatherIcon: number;

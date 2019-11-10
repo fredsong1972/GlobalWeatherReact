@@ -1,9 +1,8 @@
-import React from "react";
+﻿import React from "react";
 import { Button, FormControl } from 'react-bootstrap';
 import { AsyncTypeahead, Typeahead } from 'react-bootstrap-typeahead';
 import { Country } from '../types/Country';
 import { City } from '../types/City';
-import { Constants } from '../Constants';
 
 interface IState {
     city: City;
@@ -13,7 +12,6 @@ interface IState {
 };
 
 interface IProps {
-    /* The http path that the form will be posted to */
     getWeather: (e: any, country: string, serachText: string) => Promise<void>;
     countries: Country[];
 }
