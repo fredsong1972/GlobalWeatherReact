@@ -4,8 +4,8 @@
 }
 
 .field {
-  padding-left: 10px; 
-  padding-right: 10px
+    padding-left: 10px; 
+    padding-right: 10px
 }
 
 .city {
@@ -21,21 +21,21 @@
     border-radius: 5px;
     box-shadow: 2px 2px #888888;
     font-family: 'Merriweather', serif;
- }
+}
   
-  .city h1 {
+.city h1 {
     line-height: 1.2
-  }
+}
   
-  .city span {
+.city span {
     padding-left: 20px
-  }
+}
   
-  .city .row {
+.city .row {
     padding-top: 20px
-  }
+}
   
-  .weatherError {
+.weatherError {
     color: #f16051;
     font-size: 20px;
     letter-spacing: 1px;

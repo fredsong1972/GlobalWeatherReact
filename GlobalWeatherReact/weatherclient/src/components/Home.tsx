@@ -1,12 +1,15 @@
 ﻿import React from 'react';
 import Form from './Form';
+import { connect } from "react-redux";
+import { AppActions } from "../types/actions";
+import { bindActionCreators } from "redux";
+import { ThunkDispatch } from "redux-thunk";
 import WeatherDetails from './WeatherDetails';
 import { Weather } from "../types/Weather";
 import { City } from "../types/City";
 import { Country } from "../types/Country";
-import { Constants } from '../Constants';
-import { CurrentCondition } from '../types/CurrentCondition'
-import { CityMetaData } from '../types/CityMetaData'
+import { getCountries, getWeatherOfPrevLocation } from "../actions/actions";
+
 
 interface IState {
 
@@ -15,135 +18,32 @@ interface IState {
     city?: City
 }
 
-class Home extends React.Component<IState> {
+interface IFormProps {
+    /* The http path that the form will be posted to */
+    getCountries: () => void;
+    getWeatherOfPrevLocation: () => void;
+}
 
-    public state: IState = {
-        weather: {
-            error: ""
-        } as Weather,
-        countries: [],
-        city: undefined
+
+class Home extends React.Component<IFormProps, IState> {
+    constructor(props: IFormProps) {
+        super(props);
+        this.state = {
+            weather: {
+                error: ""
+            } as Weather,
+            countries: [],
+            city: undefined
+        };
     }
-
-    async getCountries(): Promise<Country[]> {
+    
+   
+    componentDidMount() {
         try {
-            const res = await fetch(`${Constants.locationAPIUrl}/countries?apikey=${Constants.apiKey}`);
-            return await res.json() as Country[];
-
+           this.props.getCountries();
+           this.props.getWeatherOfPrevLocation();
         } catch (error) {
             console.log(error);
-            return [];
-        }
-    }
-
-    async getCity(searchText: string, countryCode: string): Promise<City> {
-        const res = await fetch(`${Constants.locationAPIUrl}/cities/${countryCode}/search?apikey=${Constants.apiKey}&q=${searchText}`);
-        const cities = await res.json() as City[];
-        if (cities.length > 0)
-            return cities[0];
-        return {} as City;
-    }
-
-    async getCurrentConditions(city: City) {
-        try {
-            const res = await fetch(`${Constants.currentConditionsAPIUrl}/${city.Key}?apikey=${Constants.apiKey}`);
-            const currentConditions = await res.json() as CurrentCondition[];
-            if (currentConditions.length > 0) {
-                const weather = new Weather(currentConditions[0], city);
-                await this.setStateAsync({
-                    weather: weather,
-                    city: city
-                } as IState);
-            }
-        } catch (error) {
-            console.log(error);
-        }
-        return {} as Weather;
-    }
-
-    getWeather = async (e: any, countryCode: string, searchText: string) => {
-        e.preventDefault();
-        if (!countryCode && !searchText) {
-            await this.setStateAsync({ weather: { error: "Please enter the value." } } as IState);
-            return;
-        }
-        try {
-            const city = await this.getCity(searchText, countryCode);
-            if (city.Key) {
-                await this.updateLastAccessedCity(city);
-                await this.getWeatherAsync(city);
-            }
-
-        } catch (err) {
-            await this.setStateAsync({ weather: { error: err } } as IState);
-        }
-
-
-    };
-
-    async getWeatherAsync(city: City) {
-        try {
-            const res = await fetch(`${Constants.currentConditionsAPIUrl}/${city.Key}?apikey=${Constants.apiKey}`);
-            const currentConditions = await res.json() as CurrentCondition[];
-            if (currentConditions.length > 0) {
-                const weather = new Weather(currentConditions[0], city);
-                await this.setStateAsync({
-                    weather: weather,
-                    city: city
-                } as IState);
-            }
-        } catch (error) {
-            console.log(error);
-        }
-        return {} as Weather;
-    }
-
-    async updateLastAccessedCity(city: City) {
-        try {
-            const data = new CityMetaData(city);
-            await fetch(`${Constants.cityAPIUrl}`, {
-                method: 'post',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                  },
-                body: JSON.stringify(data)
-            });
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    async getLastAccessedCity(): Promise<City> {
-        try {
-
-            const res = await fetch(`${Constants.cityAPIUrl}`);
-            const data = await res.json() as CityMetaData;
-            return {
-                Key: data.id,
-                EnglishName: data.name,
-                Type: 'City',
-                Country: {
-                    ID: data.countryId,
-                    EnglishName: ''
-                }
-            } as City;
-        } catch (error) {
-            console.log(error);
-            return {} as City;
-        }
-    }
-
-    async componentDidMount() {
-        try {
-            const countries = await this.getCountries();
-            await this.setStateAsync({ countries: countries } as IState);
-            const lastCity = await this.getLastAccessedCity();
-            if (lastCity && lastCity.Key) {
-                await this.getWeatherAsync(lastCity);
-            }
-        } catch (error) {
-
         }
     }
 
@@ -159,8 +59,8 @@ class Home extends React.Component<IState> {
                 <div className="container">
                     <div className="row">
                         <div className="form-container">
-                            <WeatherDetails weather={this.state.weather} />
-                            <Form getWeather={this.getWeather} countries={this.state.countries} />
+                            <WeatherDetails />
+                            <Form  />
                         </div>
                     </div>
                 </div>
@@ -169,4 +69,9 @@ class Home extends React.Component<IState> {
     }
 }
 
-export default Home;
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppActions>): IFormProps => ({
+    getCountries: bindActionCreators(getCountries, dispatch),
+    getWeatherOfPrevLocation: bindActionCreators(getWeatherOfPrevLocation, dispatch)
+});
+
+export default connect(null, mapDispatchToProps)(Home);

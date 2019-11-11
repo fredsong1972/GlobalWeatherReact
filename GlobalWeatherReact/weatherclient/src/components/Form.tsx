@@ -1,34 +1,42 @@
 ﻿import React from "react";
+import { AppState } from "../store/configStore";
+import { connect } from "react-redux";
+import { AppActions } from "../types/actions";
+import { bindActionCreators } from "redux";
+import { ThunkDispatch } from "redux-thunk";
+import { getWeather } from "../actions/actions";
 import { Button, FormControl } from 'react-bootstrap';
-import { AsyncTypeahead, Typeahead } from 'react-bootstrap-typeahead';
+import { Typeahead } from 'react-bootstrap-typeahead';
 import { Country } from '../types/Country';
-import { City } from '../types/City';
 
 interface IState {
-    city: City;
     country: Country;
-    cities: City[];
     searchText: string
 };
 
-interface IProps {
-    getWeather: (e: any, country: string, serachText: string) => Promise<void>;
+interface IFormProps {
     countries: Country[];
 }
+
+interface IDispatchProps {
+    getWeather: (country: string, city: string) => void;
+}
+
+interface IProps extends IFormProps, IDispatchProps {}
 
 class Form extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
         this.state = {
-            city: {} as City,
             country: {} as Country,
-            cities: [],
             searchText: ""
         }
     };
 
     handleSubmit = async (e: any) => {
-        this.props.getWeather(e, this.state.country.ID, this.state.searchText);
+        e.preventDefault();
+        if (this.state.searchText && this.state.country)
+            this.props.getWeather(this.state.country.ID, this.state.searchText);
     }
 
     render() {
@@ -58,4 +66,12 @@ class Form extends React.Component<IProps, IState> {
     }
 };
 
-export default Form;
+const mapStateToProps = (state: AppState) : IFormProps =>({
+    countries : state.countries
+});
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppActions>): IDispatchProps => ({
+    getWeather: bindActionCreators(getWeather, dispatch)
+});
+
+export default connect (mapStateToProps, mapDispatchToProps) (Form)
